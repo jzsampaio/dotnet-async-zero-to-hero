@@ -1,0 +1,65 @@
+* Motivation
+
+C#'s Task, async, and await are complicated. Fun, but complicated.
+
+In my early experience with them C# async programming, I thought my code was
+running in parallel threads, but it wasn't.
+
+I then setup these experiments to try out some C# idioms and evaluate
+the thread setup that these idioms produced.
+
+I was surprised by the result.
+
+* Dependencies
+
+You'll need dotnet core and [[https://github.com/filipw/dotnet-script][dotnet script]] setup on your environment.
+
+My setup:
+
+#+BEGIN_SRC sh
+$ dotnet --version
+2.1.301
+
+
+$ dotnet-script --version
+0.25.0
+#+END_SRC
+
+* Experiment
+
+All `.csx` file do the same thing: they start three tasks that will log the
+number of the thread executing the task. The task logs both on entering the
+task, and when exiting it. The difference between the `.csx` files is the
+specific c# idiom it uses to start the three tasks.
+
+* Running
+
+#+BEGIN_SRC sh
+$ ./run.sh
+#+END_SRC
+
+* Output
+
+#+BEGIN_SRC sh
+multiple-thread-1.csx
+Thread 5 - Start 2
+Thread 6 - Start 1
+Thread 4 - Start 0
+Thread 4 - End 2
+Thread 4 - End 1
+Thread 5 - End 0
+multiple-thread.csx
+Thread 1 - Start 0
+Thread 1 - Start 1
+Thread 1 - Start 2
+Thread 4 - End 2
+Thread 3 - End 1
+Thread 5 - End 0
+single-thread.csx
+Thread 1 - Start 0
+Thread 1 - End 0
+Thread 1 - Start 1
+Thread 1 - End 1
+Thread 1 - Start 2
+Thread 1 - End 2
+#+END_SRC

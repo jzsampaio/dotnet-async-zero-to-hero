@@ -1,4 +1,4 @@
-﻿#! "netcoreapp2.0"
+#! "netcoreapp2.0"
 
 using System;
 using System.Collections.Generic;
@@ -23,5 +23,3 @@ for (int i = 0; i < 3; i++)
     TaskList.Add(Foo(i));
 
 Task.WaitAll(TaskList.ToArray());
-Console.WriteLine("Press Enter to exit...");
-Console.ReadLine();
