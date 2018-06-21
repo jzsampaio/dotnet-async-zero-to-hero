@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 async Task Foo(int num) {
     Console.WriteLine("Thread {0} - Start {1}", Thread.CurrentThread.ManagedThreadId, num);
 
+    // a somewhat heave but non blocking operation
     var x = 0;
     var n = 10000;
     for(var i = 0; i < n; i++)
@@ -21,8 +22,7 @@ var TaskList = new List<Task>();
 
 for (int i = 0; i < 3; i++)
 {
-    int idx = i;
-    TaskList.Add(Task.Run(() => Foo(idx)));
+    TaskList.Add(Task.Run(() => Foo(i)));
 }
 
 Task.WaitAll(TaskList.ToArray());

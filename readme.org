@@ -70,3 +70,16 @@ Thread 1 - End 1
 Thread 1 - Start 2
 Thread 1 - End 2
 #+END_SRC
+
+* Observations
+
+- The async/Task/await framework may be used to parallelize operations.
+- Whether or not the execution will turn out to be in parallel depends on
+  the task being executed to be of a blocking nature (blocking as in process
+  blocking mechanisms suce as IO and semaphores).
+- In order to parallelize non blocking operations, wrap the function call
+  (async or not) around a lambda. This is done in the snippet:
+
+#+BEING_SRC java
+    TaskList.Add(Task.Run(() => Foo(i)));
+#+END_SRC java
